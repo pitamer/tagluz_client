@@ -1,0 +1,56 @@
+.login-page {
+  /* background: linear-gradient(to bottom, #53ccf177 0%, rgba(255, 255, 255, 0) 100%); */
+  background: linear-gradient(315deg, #4dccc6 0%, #96e4df 74%);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  min-height: 100%;
+}
+
+.login-page h3 {
+  margin: 0rem 0rem;
+}
+
+.login-page .row {
+  padding: 20px;
+}
+
+@-webkit-keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-page .column {
+  background: white;
+  margin: 4rem;
+  padding: 1rem 2rem;
+  border: 1px grey solid;
+  border-radius: 1rem 1rem;
+  box-shadow: 0px 0px 9px grey;
+  height: fit-content;
+
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+
+  -webkit-animation-name: fadeInDown;
+  animation-name: fadeInDown;
+}

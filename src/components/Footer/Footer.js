@@ -2,24 +2,20 @@ import React from "react";
 import "./index.css";
 
 function Footer() {
+  // const [versionModalOpen, setVersionModalOpen] = React.useState(false);
+  // const [aboutModalOpen, setAboutModalOpen] = React.useState(false);
+  // const [contactModalopen, setContactModalOpen] = React.useState(false);
+
   return (
     <div className="footer">
-      <a href="#default" className="logo">
-        
-        </a>
-      <a href="#default" className="logo">
-        About
-      </a>
-      <a href="#default" className="logo">
-        
-      </a>
-      <a href="#default" className="logo">
-        Contact
-      </a>
-      <div className="header-right">
-        {/* <a href="#about">About</a>
-        <a href="#contact">Contact</a> */}
-      </div>
+      <ul className='left-items'>
+        {/* <li>App by Pitamer</li> */}
+        <li onClick={''}>0.91</li>
+      </ul>
+      <ul className='right-items'>
+        <li>About</li>
+        <li>Contact</li>
+      </ul>
     </div>
   );
 }

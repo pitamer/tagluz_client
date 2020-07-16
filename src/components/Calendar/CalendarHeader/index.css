@@ -1,0 +1,27 @@
+.calendar .header {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 115%;
+    padding: 1.5em 0;
+    border-bottom: 1px solid var(--border-color);
+    background-color: #f1f1f1;
+  }
+  
+  .calendar .header .icon {
+    cursor: pointer;
+    transition: .15s ease-out;
+  }
+  
+  .calendar .header .icon:hover {
+    transform: scale(1.75);
+    transition: .25s ease-out;
+    color: var(--main-color);
+  }
+  
+  .calendar .header .icon:first-of-type {
+    margin-left: 1em;
+  }
+  
+  .calendar .header .icon:last-of-type {
+    margin-right: 1em;
+  }

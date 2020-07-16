@@ -1,0 +1,17 @@
+.day-modal .icon {
+  font-size: 20px;
+  margin: 0rem 0.5rem
+}
+
+.day-modal .time-range-picker {
+  transition: 0.35s ease-in-out;
+  border-radius: 6px 6px 0px 0px;
+}
+
+.day-modal .green {
+  background: rgba(0, 255, 0, 0.15);
+}
+
+.day-modal .yellow {
+  background: rgba(255, 255, 0, 0.2);
+}

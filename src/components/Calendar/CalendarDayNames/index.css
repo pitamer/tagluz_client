@@ -1,0 +1,8 @@
+.calendar .days {
+    text-transform: uppercase;
+    font-weight: 400;
+    color: var(--text-color-light);
+    font-size: 70%;
+    padding: .75em 0;
+    border-bottom: 1px solid var(--border-color);
+  }

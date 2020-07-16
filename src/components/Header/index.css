@@ -1,7 +1,11 @@
-.header {
+/* .header {
     overflow: hidden;
     background-color: #f1f1f1;
     padding: 20px 10px;
+  }
+
+  .header .icon {
+    margin: 0rem 0.5rem 0rem 0rem;
   }
   
   .header a {
@@ -44,4 +48,4 @@
     .header-right {
       float: none;
     }
-  }
+  } */

@@ -1,0 +1,92 @@
+.calendar .body .cell {
+  position: relative;
+  height: 5em;
+  border-right: 1px solid var(--border-color);
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--neutral-color);
+  transition: 0.25s ease-in-out;
+}
+
+.calendar .body .cell:hover {
+  background: var(--bg-color);
+  transition: 0.5s ease-out;
+}
+
+.calendar .body .selected {
+  border-left: 6px solid transparent;
+  border-image: linear-gradient(45deg, #1a8fff 0%, #53cbf1 40%);
+  border-image-slice: 1;
+}
+
+.calendar .body .cell:last-child {
+  border-right: none;
+}
+
+.calendar .body .cell .number {
+  position: absolute;
+  top: 0.55em;
+  right: 0.55em;
+  font-weight: 700;
+  font-size: 82.5%;
+  text-align: center;
+  width: 20px;
+  border-radius: 3px;
+}
+
+.calendar .body .cell .yellow {
+  /* color: black; */
+  background: rgba(255, 255, 0, 0.32);
+  transition: 0.35s ease-in-out;
+}
+
+.calendar .body .cell .green {
+  /* color: black; */
+  background: rgba(0, 255, 0, 0.17);
+  transition: 0.35s ease-in-out;
+}
+
+.calendar .body .cell .notifiers-area {
+  position: absolute;
+  font-weight: 0%;
+  line-height: 1;
+  bottom: 0.4em;
+  right: 0.1em;
+}
+
+.calendar .body .cell .notifiers-area .icon {
+  margin: 0rem 0.2rem 0rem 0rem;
+}
+
+.calendar .body .disabled {
+  color: var(--text-color-light);
+  pointer-events: none;
+}
+
+.calendar .body .cell .bg {
+  font-weight: 700;
+  line-height: 1;
+  color: var(--main-color);
+  opacity: 0;
+  font-size: 8em;
+  position: absolute;
+  top: -0.2em;
+  right: -0.05em;
+  transition: 0.25s ease-out;
+  letter-spacing: -0.07em;
+}
+
+@media only screen and (max-width: 600px) {
+  .bg {
+    display: none;
+  }
+  .notifiers-area .icon {
+    font-size: smaller;
+  }
+}
+
+.calendar .body .cell:hover .bg,
+.calendar .body .selected .bg {
+  opacity: 0.05;
+  transition: 0.2s ease-in;
+}
