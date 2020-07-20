@@ -8,9 +8,7 @@ import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-// import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from "@material-ui/core/DialogTitle";
-
 import ModalTimeRangePicker from "./ModalTimeRangePicker";
 import ModalNotifier from "./ModalNotifier";
 
@@ -34,39 +32,32 @@ const DayModal = (props) => {
   const addMessage = useStoreActions((actions) => actions.addMessage);
 
   const DisplayAddMessage = loggedUser.isAdmin ? "" : "none";
-  const DisplayDelShift = props.userShift.isAllDay !== undefined ? "" : "none";
-  const DisplaySave =
-    props.userShift.isAllDay === undefined || messageValue.length > 1
-      ? ""
-      : "none";
-  // The whole DisplaySave thing is not optimal to say the least
-  // it's this way for now because i still can't update existing shifts
-  // needs fix
+  const userHasShift = props.userShift.isAllDay !== undefined;
+  const DisplayDelShift = userHasShift ? "" : "none";
+  const DisplayReserveDay = !userHasShift ? "" : "none";
+  const DisplaySave = !userHasShift || messageValue.length > 1 ? "" : "none";
 
-  function getShiftTime(time) {
-    return props.userShift[time] !== undefined
-      ? props.userShift[time]
-      : time === "startTime"
+  function getShiftTime(requestedTime) {
+    return props.userShift[requestedTime] !== undefined
+      ? props.userShift[requestedTime]
+      : requestedTime === "startTime"
       ? props.day.setHours(8)
       : props.day.setHours(16);
   }
 
-  // function makeDay() {
-  //   const body = { date: "29-6-2020" };
-  //   fetch("http://localhost:8080/days/mkDay", {
-  //     method: "POST",
-  //     body: JSON.stringify(body),
-  //     headers: { "Content-Type": "application/json" },
-  //   }).then((resp) => {
-  //     console.log("posted");
-  //   });
-  // }
-
-  // function getAllData() {
-  //   fetch("http://localhost:8080/days/getAll")
-  //     .then((resp) => resp.json())
-  //     .then((data) => console.log(data));
-  // }
+  function handleReserveDay() {
+    const newShiftPayload = {
+      day: props.day,
+      newShift: {
+        user: loggedUser.name,
+        startTime: shiftStartTime,
+        endTime: shiftEndTime,
+        isAllDay: true,
+      },
+    };
+    addShift(newShiftPayload);
+    props.onModalClose();
+  }
 
   function saveModalInput() {
     if (messageValue.length < 1) {
@@ -118,6 +109,22 @@ const DayModal = (props) => {
         <ModalNotifier icon="textsms" items={props.dayFormattedMessages} />
         <ModalNotifier icon="people_alt" items={props.dayWorkers} />
         <hr />
+        <div style={{ display: DisplayReserveDay }}>
+          <Tooltip arrow placement="top" title="Reserve full day">
+            <Button
+              onClick={handleReserveDay}
+              fullWidth
+              variant="contained"
+              disableElevation
+              style={{
+                background: "rgba(255, 255, 0, 0.2)",
+                border: "1px lightgrey solid",
+              }}
+            >
+              <span className={`icon`}>bookmark_border</span>Reserve all day
+            </Button>
+          </Tooltip>
+        </div>
         <div className={`time-range-picker ${props.dayColor}`}>
           <ModalTimeRangePicker
             day={props.day}
@@ -127,9 +134,7 @@ const DayModal = (props) => {
             setShiftEndTime={setShiftEndTime}
           />
         </div>
-        <div
-          style={{ display: DisplayDelShift, transition: "0.35s ease-in-out" }}
-        >
+        <div style={{ display: DisplayDelShift }}>
           <Tooltip arrow placement="top" title="Delete shift">
             <Button
               onClick={handleDelShift}
@@ -147,7 +152,7 @@ const DayModal = (props) => {
             id="name"
             label="Add a Message"
             type="name"
-            fullWidth={false}
+            fullWidth
             value={messageValue}
             onChange={(event) => {
               setMessageValue(event.target.value);
@@ -156,12 +161,6 @@ const DayModal = (props) => {
         </div>
       </DialogContent>
       <DialogActions>
-        {/* <Button onClick={makeDay} color="primary" size="small">
-          makeDay
-        </Button>
-        <Button onClick={getAllData} color="primary" size="small">
-          getData
-        </Button> */}
         <div style={{ display: DisplaySave }}>
           <Button onClick={saveModalInput} color="primary" size="small">
             save

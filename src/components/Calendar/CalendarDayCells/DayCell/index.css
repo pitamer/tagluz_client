@@ -30,19 +30,17 @@
   font-weight: 700;
   font-size: 82.5%;
   text-align: center;
-  width: 20px;
-  border-radius: 3px;
+  width: 1.55em;
+  border-radius: 0.25em;
 }
 
 .calendar .body .cell .yellow {
-  /* color: black; */
-  background: rgba(255, 255, 0, 0.32);
+  background: rgba(255, 255, 0, 0.38);
   transition: 0.35s ease-in-out;
 }
 
 .calendar .body .cell .green {
-  /* color: black; */
-  background: rgba(0, 255, 0, 0.17);
+  background: rgba(0, 255, 0, 0.18);
   transition: 0.35s ease-in-out;
 }
 
@@ -60,6 +58,11 @@
 
 .calendar .body .disabled {
   color: var(--text-color-light);
+  pointer-events: none;
+}
+
+.calendar .body .closed {
+  background: linear-gradient(225deg, var(--text-color-light) 5%, var(--bg-color) 35%);
   pointer-events: none;
 }
 
@@ -82,6 +85,18 @@
   }
   .notifiers-area .icon {
     font-size: smaller;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .notifiers-area .icon {
+    font-size: 0.7em;
+  }
+}
+
+@media only screen and (max-height: 639px) {
+  .calendar .body .cell {
+    height: 4.3em;
   }
 }
 

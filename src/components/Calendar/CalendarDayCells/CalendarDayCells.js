@@ -10,6 +10,7 @@ function CalendarDayCells() {
   const currentMonth = useStoreState((state) => state.currentMonth);
   const selectedDate = useStoreState((state) => state.selectedDate);
   const data = useStoreState((state) => state.data);
+  // console.log(data)
 
   const monthStart = dateFns.startOfMonth(currentMonth);
   const monthEnd = dateFns.endOfMonth(monthStart);
@@ -24,7 +25,7 @@ function CalendarDayCells() {
 
   function getDayData(day) {
     for (let dbDay of data) {
-      if (dateFns.isSameDay(dbDay.date, day)) {
+      if (dateFns.isSameDay(dateFns.parseISO(dbDay.date), day)) {
         return dbDay;
       }
     }

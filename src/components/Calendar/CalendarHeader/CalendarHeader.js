@@ -19,7 +19,7 @@ function CalendarHeader() {
         direction="left"
         action={() => prevMonth(currentMonth)}
       />
-      <div className="col col-center">
+      <div className="col col-center header-title">
         <span>{dateFns.format(currentMonth, dateFormat)}</span>
       </div>
       <MonthNavArrow

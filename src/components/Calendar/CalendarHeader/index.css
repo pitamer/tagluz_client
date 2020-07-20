@@ -1,27 +1,44 @@
 .calendar .header {
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 115%;
-    padding: 1.5em 0;
-    border-bottom: 1px solid var(--border-color);
-    background-color: #f1f1f1;
+  text-transform: uppercase;
+  overflow: hidden;
+  font-weight: 700;
+  font-size: 115%;
+  border-bottom: 1px solid var(--border-color);
+  background-color: #f1f1f1;
+}
+
+.calendar .header .header-title {
+  margin: 1em 0em;
+  padding-top: 0.3rem;
+  /* border: 1px red dashed */
+}
+
+.calendar .header .icon {
+  cursor: pointer;
+  transition: 0.15s ease-out;
+  margin: 0em;
+  padding: 1.5em;
+  /* border: 1px red dashed */
+}
+
+.calendar .header .icon:hover {
+  transform: scale(1.75);
+  transition: 0.25s ease-out;
+  color: var(--main-color);
+}
+
+@media only screen and (max-width: 450px) {
+  .calendar .header {
+    font-size: 90%;
   }
-  
   .calendar .header .icon {
-    cursor: pointer;
-    transition: .15s ease-out;
+    transform: scale(1.3);
+    /* color: var(--main-color); */
   }
-  
-  .calendar .header .icon:hover {
-    transform: scale(1.75);
-    transition: .25s ease-out;
-    color: var(--main-color);
+}
+
+@media only screen and (max-width: 350px) {
+  .calendar .header {
+    font-size: 79%;
   }
-  
-  .calendar .header .icon:first-of-type {
-    margin-left: 1em;
-  }
-  
-  .calendar .header .icon:last-of-type {
-    margin-right: 1em;
-  }
+}

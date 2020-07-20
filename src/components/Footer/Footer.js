@@ -10,11 +10,12 @@ function Footer() {
     <div className="footer">
       <ul className='left-items'>
         {/* <li>App by Pitamer</li> */}
-        <li onClick={''}>0.91</li>
+        <li>Tagluz 0.91</li>
       </ul>
       <ul className='right-items'>
-        <li>About</li>
-        <li>Contact</li>
+        {/* <li>About</li> */}
+        {/* <li>Contact</li> */}
+        <li>by Pitamar</li>
       </ul>
     </div>
   );

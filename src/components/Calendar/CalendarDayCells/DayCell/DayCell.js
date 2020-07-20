@@ -12,6 +12,13 @@ function DayCell(props) {
   const onSelectDate = useStoreActions((actions) => actions.onSelectDate);
   const loggedUser = useStoreState((state) => state.loggedUser);
 
+  ///////////////////////////////////////////////////////
+  // console.log(props.dayData)
+  // if (dateFns.isFirstDayOfMonth(props.day)) {
+  //   console.log(localStorage.getItem('username'))
+  //   console.log(loggedUser)
+  // }
+
   const [isModalOpen, setModalOpen] = React.useState(false);
 
   const dayShifts = props.dayData === undefined ? [] : props.dayData.shifts;
@@ -36,6 +43,8 @@ function DayCell(props) {
   function getCellClassName() {
     return !dateFns.isSameMonth(props.day, props.monthStart)
       ? "disabled"
+      : dateFns.isSaturday(props.day)
+      ? 'closed'
       : dateFns.isSameDay(props.day, props.selectedDate)
       ? "selected"
       : null;

@@ -1,5 +1,5 @@
-import React, { /*useEffect*/ } from "react";
-// import { useStoreActions } from "easy-peasy";
+import React, { useEffect } from "react";
+import { useStoreActions } from "easy-peasy";
 
 import CalendarHeader from "./CalendarHeader/CalendarHeader";
 import CalendarDayNames from "./CalendarDayNames/CalendarDayNames";
@@ -9,12 +9,17 @@ import "./index.css";
 
 function Calendar() {
 
-  // const fetchData = useStoreActions(actions => actions.fetchData);
+  const fetchData = useStoreActions(actions => actions.fetchData);
+  const fetchLoggedUser = useStoreActions(actions => actions.fetchLoggedUser);
 
-  // useEffect(() => {
-  //   fetchData();
-  //   // eslint-disable-next-line
-  // }, []);
+  useEffect(() => {
+    const username = localStorage.getItem("username");
+    if (username) {
+      fetchData();
+      fetchLoggedUser(username);
+    }
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className="calendar">

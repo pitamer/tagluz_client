@@ -1,29 +1,30 @@
-import { action /*thunk*/ } from "easy-peasy";
-// import mockData from "./mock-data";
-import mockData from "./mock-db";
+import { action, thunk } from "easy-peasy";
 import * as dateFns from "date-fns";
 
 const model = {
-  data: mockData,
+  data: [],
 
-  // data: [],
-  // // https://riccardogiorato.com/garden/2019/react-easy-peasy/
-  // setData: action((state, data) => {
-  //   state.data = data;
-  // }),
+  setData: action((state, data) => {
+    state.data = data;
+  }),
 
-  // fetchData: thunk(async actions => {
-  //   const res = await fetch(
-  //     "http://localhost:8080/days/getAll"
-  //   );
-  //   const data = await res.json();
-  //   actions.setData(data);
-  // }),
+  fetchData: thunk(async (actions) => {
+    const res = await fetch("http://localhost:8080/days/getAll");
+    const data = await res.json();
+    actions.setData(data);
+  }),
 
-  loggedUser: {
-    name: "pitamar",
-    isAdmin: true,
-  },
+  loggedUser: {},
+
+  setLoggedUser: action((state, loggedUser) => {
+    state.loggedUser = loggedUser;
+  }),
+
+  fetchLoggedUser: thunk(async (actions, payload) => {
+    const res = await fetch(`http://localhost:8080/users/getUser/${payload}`);
+    const userData = await res.json();
+    actions.setLoggedUser(userData);
+  }),
 
   currentMonth: new Date(),
   selectedDate: new Date(),
@@ -40,51 +41,34 @@ const model = {
     state.currentMonth = dateFns.subMonths(currentMonth, 1);
   }),
 
-  addShift: action((state, newShiftPayload) => {
-    const newShift = newShiftPayload.newShift;
-    const day = newShiftPayload.day;
-
-    for (let dbDay of state.data) {
-      if (dateFns.isSameDay(dbDay.date, day)) {
-        dbDay.shifts = [...dbDay.shifts, newShift];
-        return null;
-      }
-    }
-    state.data.push({
-      date: day,
-      shifts: [newShift],
-      messages: [],
-      alerts: [],
+  addShift: thunk(async (actions, payload) => {
+    const res = await fetch(`http://localhost:8080/days/addShift`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
     });
+    const updatedData = await res.json();
+    actions.setData(updatedData);
   }),
 
-  addMessage: action((state, newMessagePayload) => {
-    const newMessage = newMessagePayload.newMessage;
-    const day = newMessagePayload.day;
-
-    for (let dbDay of state.data) {
-      if (dateFns.isSameDay(dbDay.date, day)) {
-        dbDay.messages = [...dbDay.messages, newMessage];
-        return null;
-      }
-    }
-    state.data.push({
-      date: day,
-      shifts: [],
-      messages: [newMessage],
-      alerts: [],
+  addMessage: thunk(async (actions, payload) => {
+    const res = await fetch(`http://localhost:8080/days/addMessage`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
     });
+    const updatedData = await res.json();
+    actions.setData(updatedData);
   }),
 
-  delShift: action((state, shiftPayload) => {
-    const user = shiftPayload.user;
-    const day = shiftPayload.day;
-
-    for (let dbDay of state.data) {
-      if (dateFns.isSameDay(dbDay.date, day)) {
-        dbDay.shifts = dbDay.shifts.filter((shift) => shift.user !== user);
-      }
-    }
+  delShift: thunk(async (actions, payload) => {
+    const res = await fetch(`http://localhost:8080/days/deleteShift`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const updatedData = await res.json();
+    actions.setData(updatedData);
   }),
 };
 

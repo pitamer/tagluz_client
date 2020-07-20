@@ -6,17 +6,18 @@
   width: 100%;
   background-color: #555;
   color: white;
+  /* font-size: 0em; */
 }
 
 .footer ul {
-  margin: 0.2rem;
+  margin: 0rem 0.2rem;
   padding: 0rem 0.3rem;
 }
 
 .footer ul li {
   display: inline;
   margin: 0rem 1rem 0rem 0.4rem;
-  font-size: small;
+  font-size: 0.8em
 }
 
 .footer .right-items {

@@ -1,11 +1,11 @@
 .day-modal .icon {
-  font-size: 20px;
-  margin: 0rem 0.5rem
+  font-size: 1.45em;
+  margin: 0rem 0.5rem;
 }
 
 .day-modal .time-range-picker {
   transition: 0.35s ease-in-out;
-  border-radius: 6px 6px 0px 0px;
+  border-radius: 0.3em 0.3em 0px 0px;
 }
 
 .day-modal .green {

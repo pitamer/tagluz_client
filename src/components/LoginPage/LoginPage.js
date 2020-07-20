@@ -3,6 +3,12 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import LoyaltyOutlinedIcon from "@material-ui/icons/LoyaltyOutlined";
+
+import TagforceLogo from "../../tagforce_logo_and_text_black.jpg";
+
 import "./index.css";
 
 function LoginPage(props) {
@@ -16,9 +22,9 @@ function LoginPage(props) {
     )
       .then((resp) => resp.json())
       .then((data) => {
-        if (typeof data.name === "string") {
-          localStorage.setItem("username", data.name)
-          setIsUserKnown(true)
+        if (data) {
+          localStorage.setItem("username", usernameValue);
+          setIsUserKnown(true);
         }
       });
   }
@@ -26,14 +32,19 @@ function LoginPage(props) {
   return (
     <div className="login-page">
       <div className="column">
-        <div className="row">
-          <h3>Welcome :)</h3>
-        </div>
+        <IconButton color="inherit" className="logos">
+          <span className="logo-first-item">
+            <img src={TagforceLogo} alt="Tagforce logo" height="30em" />
+          </span>
+          <span className="logo-divider">|</span>
+          <LoyaltyOutlinedIcon />
+          <Typography variant="overline" style={{margin: '0.8em 0em 0em 0.25em'}}>Tagluz</Typography>
+        </IconButton>
         <div className="row">
           <TextField
             label="Username:"
-            id="name"
-            type="name"
+            id="username"
+            type="username"
             autoFocus={false}
             fullWidth={false}
             value={usernameValue}

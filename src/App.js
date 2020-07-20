@@ -3,15 +3,12 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  // Link,
   Redirect,
-  // useHistory,
-  // useLocation,
 } from "react-router-dom";
 import { StoreProvider } from "easy-peasy";
 import store from "./store/store";
 
-// import Footer from './components/Footer/Footer'
+import Footer from './components/Footer/Footer'
 import Header from "./components/Header/AppBar";
 import Calendar from "./components/Calendar/Calendar";
 
@@ -44,7 +41,7 @@ function App() {
               <main>
                 <Calendar />
               </main>
-              {/* <Footer /> */}
+              <Footer />
             </Route>
             <Route path="*">
               <Redirect to={redirect} />
