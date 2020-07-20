@@ -1,6 +1,8 @@
 import { action, thunk } from "easy-peasy";
 import * as dateFns from "date-fns";
 
+const host = "tagluz.azurewebsites.net";
+
 const model = {
   data: [],
 
@@ -9,7 +11,7 @@ const model = {
   }),
 
   fetchData: thunk(async (actions) => {
-    const res = await fetch("http://localhost:8080/days/getAll");
+    const res = await fetch(`https://${host}/days/getAll`);
     const data = await res.json();
     actions.setData(data);
   }),
@@ -21,7 +23,7 @@ const model = {
   }),
 
   fetchLoggedUser: thunk(async (actions, payload) => {
-    const res = await fetch(`http://localhost:8080/users/getUser/${payload}`);
+    const res = await fetch(`https://${host}/users/getUser/${payload}`);
     const userData = await res.json();
     actions.setLoggedUser(userData);
   }),
@@ -42,7 +44,7 @@ const model = {
   }),
 
   addShift: thunk(async (actions, payload) => {
-    const res = await fetch(`http://localhost:8080/days/addShift`, {
+    const res = await fetch(`https://${host}/days/addShift`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -52,7 +54,7 @@ const model = {
   }),
 
   addMessage: thunk(async (actions, payload) => {
-    const res = await fetch(`http://localhost:8080/days/addMessage`, {
+    const res = await fetch(`https://${host}/days/addMessage`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -62,7 +64,7 @@ const model = {
   }),
 
   delShift: thunk(async (actions, payload) => {
-    const res = await fetch(`http://localhost:8080/days/deleteShift`, {
+    const res = await fetch(`https://${host}/days/deleteShift`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),

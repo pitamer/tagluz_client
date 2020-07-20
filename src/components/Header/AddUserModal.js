@@ -16,13 +16,15 @@ import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 
 import "./index.css";
 
+const host = 'tagluz.azurewebsites.net'
+
 const AddUserModal = (props) => {
   const [nameValue, setNameValue] = React.useState("");
   const [appointAdmin, setAppointAdmin] = React.useState(false);
 
   function makeUser() {
     const body = { name: nameValue, isAdmin: appointAdmin };
-    fetch("http://localhost:8080/users/mkUser", {
+    fetch(`https://${host}/users/mkUser`, {
       method: "POST",
       body: JSON.stringify(body),
       headers: { "Content-Type": "application/json" },

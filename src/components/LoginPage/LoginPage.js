@@ -11,15 +11,15 @@ import TagforceLogo from "../../tagforce_logo_and_text_black.jpg";
 
 import "./index.css";
 
+const host = "tagluz.azurewebsites.net";
+
 function LoginPage(props) {
   const [usernameValue, setuserNameValue] = React.useState("");
   const [passwordValue, setPasswordValue] = React.useState("");
   const setIsUserKnown = props.setIsUserKnown;
 
   function authorizeUser(userNameValue, passwordValue) {
-    fetch(
-      `http://localhost:8080/users/checkUser/${usernameValue}/${passwordValue}`
-    )
+    fetch(`http://${host}/users/checkUser/${usernameValue}/${passwordValue}`)
       .then((resp) => resp.json())
       .then((data) => {
         if (data) {
@@ -38,7 +38,12 @@ function LoginPage(props) {
           </span>
           <span className="logo-divider">|</span>
           <LoyaltyOutlinedIcon />
-          <Typography variant="overline" style={{margin: '0.8em 0em 0em 0.25em'}}>Tagluz</Typography>
+          <Typography
+            variant="overline"
+            style={{ margin: "0.8em 0em 0em 0.25em" }}
+          >
+            Tagluz
+          </Typography>
         </IconButton>
         <div className="row">
           <TextField
