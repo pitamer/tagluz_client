@@ -19,7 +19,7 @@ function LoginPage(props) {
   const setIsUserKnown = props.setIsUserKnown;
 
   function authorizeUser(userNameValue, passwordValue) {
-    fetch(`http://${host}/users/checkUser/${usernameValue}/${passwordValue}`)
+    fetch(`https://${host}/users/checkUser/${usernameValue}/${passwordValue}`)
       .then((resp) => resp.json())
       .then((data) => {
         if (data) {
