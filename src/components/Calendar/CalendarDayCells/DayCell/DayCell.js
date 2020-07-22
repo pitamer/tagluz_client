@@ -25,12 +25,33 @@ function DayCell(props) {
   const dayAlerts = props.dayData === undefined ? [] : props.dayData.alerts;
   const dayMessages = props.dayData === undefined ? [] : props.dayData.messages;
 
+  const userShift = dayShifts.find((shift) => shift.user === loggedUser.name);
+  const dayColor =
+    userShift === undefined ? null : userShift.isAllDay ? "yellow" : "green";
+
+  const cellClassName = !dateFns.isSameMonth(props.day, props.monthStart)
+    ? "disabled"
+    : dateFns.isSaturday(props.day)
+    ? "closed"
+    : dateFns.isSameDay(props.day, props.selectedDate)
+    ? "selected"
+    : null;
+
   const dayWorkers = dayShifts.map((shift) => shift.user);
-  const dayColor = getDayColor()
 
   const dayFormattedMessages = dayMessages.map(
     (message) => `${message.user}: ${message.content}`
   );
+
+  const messagesNotifier = dayMessages.length < 1 ? null : (
+    <DayNotifier icon="textsms" items={dayFormattedMessages} key="m" />
+  );
+  const alertsNotifier = dayAlerts.length < 1 ? null : (
+    <DayNotifier icon="report" items={dayAlerts} key="a" />
+  );
+  const dayNotifiers = props.dayData === undefined
+    ? null
+    : [messagesNotifier, alertsNotifier];
 
   function onDateClick(day) {
     if (dateFns.isSameDay(day, selectedDate)) {
@@ -40,61 +61,15 @@ function DayCell(props) {
     }
   }
 
-  function getCellClassName() {
-    return !dateFns.isSameMonth(props.day, props.monthStart)
-      ? "disabled"
-      : dateFns.isSaturday(props.day)
-      ? 'closed'
-      : dateFns.isSameDay(props.day, props.selectedDate)
-      ? "selected"
-      : null;
-  }
-
-  function getExistingShiftForUser() {
-    for (let shift of dayShifts) {
-      if (shift.user === loggedUser.name) {
-        return shift;
-      }
-    }
-    return [];
-  }
-
-  function getDayColor() {
-    const shift = getExistingShiftForUser();
-    return shift.isAllDay === undefined
-      ? null
-      : shift.isAllDay
-      ? "yellow"
-      : "green";
-  }
-
-  function getDayNotifiers() {
-    function getDayMessagesNotifier() {
-      return dayMessages.length < 1 ? null : (
-        <DayNotifier icon="textsms" items={dayFormattedMessages} key="m" />
-      );
-    }
-    function getDayAlertsNotifier() {
-      return dayAlerts.length < 1 ? null : (
-        <DayNotifier icon="report" items={dayAlerts} key="a" />
-      );
-    }
-    return props.dayData === undefined
-      ? null
-      : [getDayMessagesNotifier(), getDayAlertsNotifier()];
-  }
-
   return (
     <>
       <div
-        className={`col cell ${getCellClassName()}`}
+        className={`col cell ${cellClassName}`}
         onClick={() => onDateClick(dateFns.toDate(props.day))}
       >
-        <span className={`number ${dayColor}`}>
-          {props.formattedDate}
-        </span>
+        <span className={`number ${dayColor}`}>{props.formattedDate}</span>
         <span className="bg">{props.formattedDate}</span>
-        <div className="notifiers-area">{getDayNotifiers()}</div>
+        <div className="notifiers-area">{dayNotifiers}</div>
       </div>
       <DayModal
         day={props.day}
@@ -103,7 +78,7 @@ function DayCell(props) {
         dayFormattedMessages={dayFormattedMessages}
         dayWorkers={dayWorkers}
         dayAlerts={dayAlerts}
-        userShift={getExistingShiftForUser()}
+        userShift={userShift}
         dayColor={dayColor}
       />
     </>

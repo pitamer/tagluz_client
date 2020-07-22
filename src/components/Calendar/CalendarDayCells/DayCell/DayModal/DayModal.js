@@ -14,36 +14,35 @@ import ModalNotifier from "./ModalNotifier";
 
 import "./index.css";
 
-const DayModal = (props) => {
+function DayModal(props) {
   const dateFormat = "EEEE, MMMM d";
   const modalTitle = dateFns.format(props.day, dateFormat);
+  const userHasShift = props.userShift !== undefined;
+  console.log(props.day, userHasShift);
 
-  const [shiftStartTime, setShiftStartTime] = React.useState(
-    getShiftTime("startTime")
-  );
-  const [shiftEndTime, setShiftEndTime] = React.useState(
-    getShiftTime("endTime")
-  );
-  const [messageValue, setMessageValue] = React.useState("");
+  React.useEffect(() => {
+    setShiftStartTime(
+      userHasShift ? props.userShift.startTime : props.day.setHours(8)
+    );
+    setShiftEndTime(
+      userHasShift ? props.userShift.endTime : props.day.setHours(16)
+    );
+    // eslint-disable-next-line
+  }, [userHasShift]);
 
   const loggedUser = useStoreState((state) => state.loggedUser);
   const addShift = useStoreActions((actions) => actions.addShift);
   const delShift = useStoreActions((actions) => actions.delShift);
   const addMessage = useStoreActions((actions) => actions.addMessage);
 
+  const [shiftStartTime, setShiftStartTime] = React.useState(null);
+  const [shiftEndTime, setShiftEndTime] = React.useState(null);
+  const [messageValue, setMessageValue] = React.useState("");
+
   const DisplayAddMessage = loggedUser.isAdmin ? "" : "none";
-  const userHasShift = props.userShift.isAllDay !== undefined;
   const DisplayDelShift = userHasShift ? "" : "none";
   const DisplayReserveDay = !userHasShift ? "" : "none";
   const DisplaySave = !userHasShift || messageValue.length > 1 ? "" : "none";
-
-  function getShiftTime(requestedTime) {
-    return props.userShift[requestedTime] !== undefined
-      ? props.userShift[requestedTime]
-      : requestedTime === "startTime"
-      ? props.day.setHours(8)
-      : props.day.setHours(16);
-  }
 
   function handleReserveDay() {
     const newShiftPayload = {
@@ -169,6 +168,6 @@ const DayModal = (props) => {
       </DialogActions>
     </Dialog>
   );
-};
+}
 
 export default DayModal;

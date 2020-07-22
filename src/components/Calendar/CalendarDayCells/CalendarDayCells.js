@@ -4,13 +4,13 @@ import * as dateFns from "date-fns";
 
 import DayCell from "./DayCell/DayCell";
 
-import './index.css'
+import "./index.css";
 
 function CalendarDayCells() {
   const currentMonth = useStoreState((state) => state.currentMonth);
   const selectedDate = useStoreState((state) => state.selectedDate);
   const data = useStoreState((state) => state.data);
-  // console.log(data)
+  console.log(data)
 
   const monthStart = dateFns.startOfMonth(currentMonth);
   const monthEnd = dateFns.endOfMonth(monthStart);
@@ -23,22 +23,18 @@ function CalendarDayCells() {
   let days = [];
   let day = startDate;
 
-  function getDayData(day) {
-    for (let dbDay of data) {
-      if (dateFns.isSameDay(dateFns.parseISO(dbDay.date), day)) {
-        return dbDay;
-      }
-    }
-  }
-
   while (day <= endDate) {
     for (let i = 0; i < 7; i++) {
-      let formattedDate = dateFns.format(day, dateFormat);
+      const formattedDate = dateFns.format(day, dateFormat);
+      // eslint-disable-next-line
+      const dayData = data.find((dbDay) =>
+        dateFns.isSameDay(new Date(dbDay.date), day)
+      );
       days.push(
         <DayCell
           key={day}
           day={day}
-          dayData={getDayData(day)}
+          dayData={dayData}
           monthStart={monthStart}
           selectedDate={selectedDate}
           formattedDate={formattedDate}

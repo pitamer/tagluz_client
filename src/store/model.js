@@ -8,6 +8,7 @@ const model = {
 
   setData: action((state, data) => {
     state.data = data;
+    // console.log(data)
   }),
 
   fetchData: thunk(async (actions) => {

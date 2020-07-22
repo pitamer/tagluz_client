@@ -14,6 +14,8 @@
 }
 
 .calendar .body .selected {
+  border-top: 1px var(--border-color);
+  border-bottom: 1px var(--border-color);
   border-left: 6px solid transparent;
   border-image: linear-gradient(45deg, #1a8fff 0%, #53cbf1 40%);
   border-image-slice: 1;
@@ -62,7 +64,11 @@
 }
 
 .calendar .body .closed {
-  background: linear-gradient(225deg, var(--text-color-light) 5%, var(--bg-color) 35%);
+  background: linear-gradient(
+    225deg,
+    var(--text-color-light) 5%,
+    var(--bg-color) 35%
+  );
   pointer-events: none;
 }
 
