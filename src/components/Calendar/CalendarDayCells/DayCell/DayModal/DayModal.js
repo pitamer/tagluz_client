@@ -18,7 +18,7 @@ function DayModal(props) {
   const dateFormat = "EEEE, MMMM d";
   const modalTitle = dateFns.format(props.day, dateFormat);
   const userHasShift = props.userShift !== undefined;
-  console.log(props.day, userHasShift);
+  // console.log(props.day, userHasShift);
 
   React.useEffect(() => {
     setShiftStartTime(
@@ -44,9 +44,14 @@ function DayModal(props) {
   const DisplayReserveDay = !userHasShift ? "" : "none";
   const DisplaySave = !userHasShift || messageValue.length > 1 ? "" : "none";
 
+  const dayForDB = props.day.setHours(8);
+  // This was the source of much frustration. It's a
+  // yucky solution, but it solves the timezone communication
+  // problems with the DB without too much extra work.
+
   function handleReserveDay() {
     const newShiftPayload = {
-      day: props.day,
+      day: dayForDB,
       newShift: {
         user: loggedUser.name,
         startTime: shiftStartTime,
@@ -54,6 +59,7 @@ function DayModal(props) {
         isAllDay: true,
       },
     };
+    console.log(newShiftPayload);
     addShift(newShiftPayload);
     props.onModalClose();
   }
@@ -62,7 +68,7 @@ function DayModal(props) {
     if (messageValue.length < 1) {
       // addShift if nothing in message textfield
       const newShiftPayload = {
-        day: props.day,
+        day: dayForDB,
         newShift: {
           user: loggedUser.name,
           startTime: shiftStartTime,
@@ -70,12 +76,13 @@ function DayModal(props) {
           isAllDay: false,
         },
       };
+      console.log(newShiftPayload);
       addShift(newShiftPayload);
       props.onModalClose();
     } else {
       // addMessage if anything in message textfield
       const newMessagePayload = {
-        day: props.day,
+        day: dayForDB,
         newMessage: {
           user: loggedUser.name,
           content: messageValue,
@@ -88,7 +95,7 @@ function DayModal(props) {
 
   function handleDelShift() {
     const shiftPayload = {
-      day: props.day,
+      day: dayForDB,
       user: props.userShift.user,
     };
     delShift(shiftPayload);

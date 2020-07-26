@@ -10,7 +10,7 @@ function CalendarDayCells() {
   const currentMonth = useStoreState((state) => state.currentMonth);
   const selectedDate = useStoreState((state) => state.selectedDate);
   const data = useStoreState((state) => state.data);
-  console.log(data)
+  // console.log(data)
 
   const monthStart = dateFns.startOfMonth(currentMonth);
   const monthEnd = dateFns.endOfMonth(monthStart);
