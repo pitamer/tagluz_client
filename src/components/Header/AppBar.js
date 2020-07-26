@@ -11,9 +11,10 @@ import { useStoreState } from "easy-peasy";
 // import TodayIcon from '@material-ui/icons/Today';
 // import TimerIcon from '@material-ui/icons/Timer';
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
-// import LoyaltyOutlinedIcon from "@material-ui/icons/LoyaltyOutlined";
+import LoyaltyOutlinedIcon from "@material-ui/icons/LoyaltyOutlined";
 
 import AddUserModal from "./AddUserModal";
+import InfoModal from "./InfoModal";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,19 +23,20 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
   },
   appBar: {
-    // background: "#1976d2",
     background: "var(--main-color)",
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
   title: {
+    marginRight: theme.spacing(2),
     flexGrow: 1,
+  },
+  titleText: {
+    margin: "0em 0em 0em 0.5em",
   },
 }));
 
 function ButtonAppBar() {
-  const [isModalOpen, setModalOpen] = React.useState(false);
+  const [isUserModalOpen, setUserModalOpen] = React.useState(false);
+  const [isInfoModalOpen, setInfoModalOpen] = React.useState(false);
 
   const loggedUser = useStoreState((state) => state.loggedUser);
 
@@ -50,24 +52,32 @@ function ButtonAppBar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar className={classes.appBar}>
-          {/* <Typography variant="h6" className={classes.title}>
-            <IconButton color="inherit">
-              <LoyaltyOutlinedIcon /> */}
-              <Typography variant="h6" className={classes.title}>
+          <Typography
+            variant="h6"
+            className={classes.title}
+            onClick={() => setInfoModalOpen(true)}
+          >
+            <IconButton color="inherit" className={classes.title}>
+              <LoyaltyOutlinedIcon />
+              <Typography variant="button" className={classes.titleText}>
                 Tagluz
               </Typography>
-            {/* </IconButton>
-          </Typography> */}
+            </IconButton>
+          </Typography>
+          <InfoModal
+            isModalOpen={isInfoModalOpen}
+            onModalClose={() => setInfoModalOpen(false)}
+          />
           <IconButton
             color="inherit"
             style={{ display: DisplayAddMessage, marginRight: "1rem" }}
-            onClick={() => setModalOpen(true)}
+            onClick={() => setUserModalOpen(true)}
           >
             <PersonAddIcon />
           </IconButton>
           <AddUserModal
-            isModalOpen={isModalOpen}
-            onModalClose={() => setModalOpen(false)}
+            isModalOpen={isUserModalOpen}
+            onModalClose={() => setUserModalOpen(false)}
           />
           {/* <IconButton color="inherit">
             <TodayIcon />

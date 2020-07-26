@@ -8,11 +8,11 @@ import {
 import { StoreProvider } from "easy-peasy";
 import store from "./store/store";
 
-import Footer from './components/Footer/Footer'
+import LoginPage from "./components/LoginPage/LoginPage";
+
+// import Footer from './components/Footer/Footer'
 import Header from "./components/Header/AppBar";
 import Calendar from "./components/Calendar/Calendar";
-
-import LoginPage from "./components/LoginPage/LoginPage";
 
 function App() {
   const [isUserKnown, setIsUserKnown] = React.useState(
@@ -41,7 +41,7 @@ function App() {
               <main>
                 <Calendar />
               </main>
-              <Footer />
+              {/* <Footer /> */}
             </Route>
             <Route path="*">
               <Redirect to={redirect} />
