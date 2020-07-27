@@ -8,6 +8,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
+import IconButton from "@material-ui/core/IconButton";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
+
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
@@ -16,9 +19,10 @@ import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 
 import "./index.css";
 
-const host = 'tagluz.azurewebsites.net'
+const host = "tagluz.azurewebsites.net";
 
 const AddUserModal = (props) => {
+  const [isUserModalOpen, setUserModalOpen] = React.useState(false);
   const [nameValue, setNameValue] = React.useState("");
   const [appointAdmin, setAppointAdmin] = React.useState(false);
 
@@ -39,47 +43,55 @@ const AddUserModal = (props) => {
   }
 
   return (
-    <Dialog
-      open={props.isModalOpen}
-      onClose={props.onModalClose}
-      aria-labelledby="form-dialog-title"
-      className="add-user-modal"
-    >
-      <DialogTitle id="form-dialog-title">Add a User</DialogTitle>
-      <DialogContent>
-        <TextField
-          autoFocus={true}
-          label="User Name:"
-          id="name"
-          type="name"
-          fullWidth={false}
-          value={nameValue}
-          onChange={(event) => {
-            setNameValue(event.target.value);
-          }}
-        />
-        <div>
-          <FormControlLabel
-            control={
-              <Checkbox
-                icon={<VerifiedUserOutlinedIcon />}
-                checkedIcon={<VerifiedUserIcon />}
-                name="makeAdmin"
-                color="secondary"
-                value={appointAdmin}
-                onChange={() => setAppointAdmin(!appointAdmin)}
-              />
-            }
-            label="Appoint user admin"
+    <>
+      <IconButton
+        style={{ display: props.display, marginRight: "1rem" }}
+        onClick={() => setUserModalOpen(true)}
+      >
+        <PersonAddIcon />
+      </IconButton>
+      <Dialog
+        open={isUserModalOpen}
+        onClose={() => setUserModalOpen(false)}
+        aria-labelledby="form-dialog-title"
+        className="add-user-modal"
+      >
+        <DialogTitle id="form-dialog-title">Add a User</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus={true}
+            label="User Name:"
+            id="name"
+            type="name"
+            fullWidth={false}
+            value={nameValue}
+            onChange={(event) => {
+              setNameValue(event.target.value);
+            }}
           />
-        </div>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleAddUser} color="primary" size="small">
-          Add
-        </Button>
-      </DialogActions>
-    </Dialog>
+          <div>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  icon={<VerifiedUserOutlinedIcon />}
+                  checkedIcon={<VerifiedUserIcon />}
+                  name="makeAdmin"
+                  color="secondary"
+                  value={appointAdmin}
+                  onChange={() => setAppointAdmin(!appointAdmin)}
+                />
+              }
+              label="Appoint user admin"
+            />
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleAddUser} color="primary" size="small">
+            Add
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 

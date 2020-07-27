@@ -1,4 +1,5 @@
 import React from "react";
+import Grid from "@material-ui/core/Grid";
 import * as dateFns from "date-fns";
 import { useStoreState, useStoreActions } from "easy-peasy";
 
@@ -13,20 +14,26 @@ function CalendarHeader() {
 
   const dateFormat = "MMMM yyyy";
   return (
-    <div className="header row flex-middle">
-      <MonthNavArrow
-        place="start"
-        direction="left"
-        action={() => prevMonth(currentMonth)}
-      />
-      <div className="col col-center header-title">
-        <span>{dateFns.format(currentMonth, dateFormat)}</span>
-      </div>
-      <MonthNavArrow
-        place="end"
-        direction="right"
-        action={() => nextMonth(currentMonth)}
-      />
+    <div className="header">
+      <Grid container spacing={3.5}>
+        <Grid item xs>
+          <MonthNavArrow
+            direction="left"
+            action={() => prevMonth(currentMonth)}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <div className="col-center header-title">
+            <span>{dateFns.format(currentMonth, dateFormat)}</span>
+          </div>
+        </Grid>
+        <Grid item xs>
+          <MonthNavArrow
+            direction="right"
+            action={() => nextMonth(currentMonth)}
+          />
+        </Grid>
+      </Grid>
     </div>
   );
 }

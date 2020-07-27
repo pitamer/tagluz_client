@@ -59,12 +59,6 @@ body {
 
 main {
   display: block;
-
-  display: -webkit-box;   /* OLD - iOS 6-, Safari 3.1-6, BB7 */
-  display: -ms-flexbox;  /* TWEENER - IE 10 */
-  display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
-  display: flex;         /* NEW, Spec - Firefox, Chrome, Opera */
-
   margin: 0 auto;
   margin-top: 0em;
   max-width: 50em;
@@ -77,12 +71,6 @@ main {
   margin: 0;
   padding: 0;
   display: flex;
-
-  display: -webkit-box;   /* OLD - iOS 6-, Safari 3.1-6, BB7 */
-  display: -ms-flexbox;  /* TWEENER - IE 10 */
-  display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
-  display: flex;         /* NEW, Spec - Firefox, Chrome, Opera */
-
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
