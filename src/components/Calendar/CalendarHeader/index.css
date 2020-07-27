@@ -40,6 +40,17 @@
   }
 }
 
+@media only screen and (max-height: 450px) {
+  .calendar .header {
+    font-size: 82%;
+  }
+  .calendar .header .icon:active {
+    transform: scale(1.75);
+    transition: 0.01s ease-out;
+    color: var(--main-color);
+  }
+}
+
 @media only screen and (max-width: 350px) {
   .calendar .header {
     font-size: 79%;

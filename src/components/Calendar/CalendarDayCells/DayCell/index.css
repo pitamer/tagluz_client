@@ -106,6 +106,15 @@
   }
 }
 
+@media only screen and (max-height: 450px) {
+  .bg {
+    display: none;
+  }
+  .calendar .body .cell {
+    height: 3.4em;
+  }
+}
+
 .calendar .body .cell:hover .bg,
 .calendar .body .selected .bg {
   opacity: 0.05;
