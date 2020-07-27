@@ -110,9 +110,9 @@
   .bg {
     display: none;
   }
-  .calendar .body .cell {
+  /* .calendar .body .cell {
     height: 3.4em;
-  }
+  } */
 }
 
 .calendar .body .cell:hover .bg,
