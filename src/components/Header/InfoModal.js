@@ -20,7 +20,7 @@ function InfoModal(props) {
       <DialogTitle id="alert-dialog-title">About Tagluz</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          <div>Tagluz 0.91</div>
+          <div>Tagluz 0.92</div>
           <div>By Pitamer</div>
           <div>With lots of help from Ariel</div>
         </DialogContentText>

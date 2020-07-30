@@ -44,18 +44,21 @@ function DayCell(props) {
     return (dt.getHours() < 10 ? "0" : "") + dt.getHours();
   }
 
-  // FIX MORE lol
-  const dayFormattedWorkers = dayShifts.map(
-    (shift) =>
-      `${shift.user} \t|\t
-      ${hoursWithLeadingZeros(
-        new Date(shift.startTime)
-      )}:${minutesWithLeadingZeros(
-        new Date(shift.startTime)
-      )} - ${hoursWithLeadingZeros(
-        new Date(shift.endTime)
-      )}:${minutesWithLeadingZeros(new Date(shift.endTime))}`
-  );
+  const dayFormattedWorkers = dayShifts.map((shift) =>
+    `${shift.user} | ` + (shift.isAllDay === true
+      ? `[שעות גמישות]`
+      : `${hoursWithLeadingZeros(
+          new Date(shift.startTime)
+        )}:${minutesWithLeadingZeros(
+          new Date(shift.startTime)
+        )} - ${hoursWithLeadingZeros(
+          new Date(shift.endTime)
+        )}:${minutesWithLeadingZeros(
+          new Date(shift.endTime)
+        )}`)
+  ).sort((item) => {
+    return item.includes(`ש`)
+  });
 
   const dayFormattedMessages = dayMessages.map(
     (message) => `${message.user}: ${message.content}`
