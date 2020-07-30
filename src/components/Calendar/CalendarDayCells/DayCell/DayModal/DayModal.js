@@ -113,7 +113,7 @@ function DayModal(props) {
       <DialogContent>
         <ModalNotifier icon="report" items={props.dayAlerts} />
         <ModalNotifier icon="textsms" items={props.dayFormattedMessages} />
-        <ModalNotifier icon="people_alt" items={props.dayWorkers} />
+        <ModalNotifier icon="people_alt" items={props.dayFormattedWorkers} />
         <hr />
         <div style={{ display: DisplayReserveDay }}>
           <Tooltip arrow placement="top" title="Reserve full day">

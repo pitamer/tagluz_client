@@ -37,21 +37,40 @@ function DayCell(props) {
     ? "selected"
     : null;
 
-  const dayWorkers = dayShifts.map((shift) => shift.user);
+  function minutesWithLeadingZeros(dt) {
+    return (dt.getMinutes() < 10 ? "0" : "") + dt.getMinutes();
+  }
+  function hoursWithLeadingZeros(dt) {
+    return (dt.getHours() < 10 ? "0" : "") + dt.getHours();
+  }
+
+  // FIX MORE lol
+  const dayFormattedWorkers = dayShifts.map(
+    (shift) =>
+      `${shift.user} \t|\t
+      ${hoursWithLeadingZeros(
+        new Date(shift.startTime)
+      )}:${minutesWithLeadingZeros(
+        new Date(shift.startTime)
+      )} - ${hoursWithLeadingZeros(
+        new Date(shift.endTime)
+      )}:${minutesWithLeadingZeros(new Date(shift.endTime))}`
+  );
 
   const dayFormattedMessages = dayMessages.map(
     (message) => `${message.user}: ${message.content}`
   );
 
-  const messagesNotifier = dayMessages.length < 1 ? null : (
-    <DayNotifier icon="textsms" items={dayFormattedMessages} key="m" />
-  );
-  const alertsNotifier = dayAlerts.length < 1 ? null : (
-    <DayNotifier icon="report" items={dayAlerts} key="a" />
-  );
-  const dayNotifiers = props.dayData === undefined
-    ? null
-    : [messagesNotifier, alertsNotifier];
+  const messagesNotifier =
+    dayMessages.length < 1 ? null : (
+      <DayNotifier icon="textsms" items={dayFormattedMessages} key="m" />
+    );
+  const alertsNotifier =
+    dayAlerts.length < 1 ? null : (
+      <DayNotifier icon="report" items={dayAlerts} key="a" />
+    );
+  const dayNotifiers =
+    props.dayData === undefined ? null : [messagesNotifier, alertsNotifier];
 
   function onDateClick(day) {
     if (dateFns.isSameDay(day, selectedDate)) {
@@ -76,7 +95,7 @@ function DayCell(props) {
         isModalOpen={isModalOpen}
         onModalClose={() => setModalOpen(false)}
         dayFormattedMessages={dayFormattedMessages}
-        dayWorkers={dayWorkers}
+        dayFormattedWorkers={dayFormattedWorkers}
         dayAlerts={dayAlerts}
         userShift={userShift}
         dayColor={dayColor}
