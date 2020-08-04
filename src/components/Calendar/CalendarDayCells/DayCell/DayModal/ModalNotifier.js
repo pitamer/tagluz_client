@@ -15,13 +15,29 @@ function ModalNotifier(props) {
   const handleTooltipOpen = () => {
     setTooltipOpen(true);
   };
+  const handleTooltipClose = () => {
+    setTooltipOpen(false);
+  };
+
   const title = props.items.map((item) => (
     <Typography key={props.items.indexOf(item)}>{item}</Typography>
   ));
 
   return (
-    <Tooltip arrow placement="top" title={title} onClose={() => setTooltipOpen(false)} open={tooltipOpen}>
-      <Button onClick={handleTooltipOpen} onMouseOver={handleTooltipOpen}>
+    <Tooltip
+      arrow
+      placement="top"
+      title={title}
+      onClose={handleTooltipClose}
+      open={tooltipOpen}
+      disableTouchListener
+    >
+      <Button
+        // onClick={handleTooltipOpen}
+        onTouchEnd={() => setTooltipOpen(!tooltipOpen)}
+        onMouseOver={handleTooltipOpen}
+        onMouseLeave={handleTooltipClose}
+      >
         <span className={`icon notifier`}>{props.icon}</span>
       </Button>
     </Tooltip>

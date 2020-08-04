@@ -12,13 +12,6 @@ function DayCell(props) {
   const onSelectDate = useStoreActions((actions) => actions.onSelectDate);
   const loggedUser = useStoreState((state) => state.loggedUser);
 
-  ///////////////////////////////////////////////////////
-  // console.log(props.dayData)
-  // if (dateFns.isFirstDayOfMonth(props.day)) {
-  //   console.log(localStorage.getItem('username'))
-  //   console.log(loggedUser)
-  // }
-
   const [isModalOpen, setModalOpen] = React.useState(false);
 
   const dayShifts = props.dayData === undefined ? [] : props.dayData.shifts;

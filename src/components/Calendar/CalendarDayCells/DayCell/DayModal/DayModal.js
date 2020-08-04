@@ -3,7 +3,6 @@ import { useStoreState, useStoreActions } from "easy-peasy";
 import * as dateFns from "date-fns";
 
 import Button from "@material-ui/core/Button";
-import Tooltip from "@material-ui/core/Tooltip";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -18,7 +17,6 @@ function DayModal(props) {
   const dateFormat = "EEEE, MMMM d";
   const modalTitle = dateFns.format(props.day, dateFormat);
   const userHasShift = props.userShift !== undefined;
-  // console.log(props.day, userHasShift);
 
   React.useEffect(() => {
     setShiftStartTime(
@@ -38,29 +36,34 @@ function DayModal(props) {
   const [shiftStartTime, setShiftStartTime] = React.useState(null);
   const [shiftEndTime, setShiftEndTime] = React.useState(null);
   const [messageValue, setMessageValue] = React.useState("");
+  const [altUsernameValue, setAltUsernameValue] = React.useState("");
 
-  const DisplayAddMessage = loggedUser.isAdmin ? "" : "none";
+  const DisplayAdminUtils = loggedUser.isAdmin ? "" : "none";
   const DisplayDelShift = userHasShift ? "" : "none";
   const DisplayReserveDay = !userHasShift ? "" : "none";
-  const DisplaySave = !userHasShift || messageValue.length > 1 ? "" : "none";
+  const DisplaySave =
+    !userHasShift || messageValue.length > 0 || altUsernameValue.length > 0
+      ? ""
+      : "none";
 
   const dayForDB = props.day.setHours(8);
   // This was the source of much frustration. It's a
-  // yucky solution, but it solves the timezone communication
+  // quirky solution, but it solves the timezone communication
   // problems with the DB without too much extra work.
 
   function handleReserveDay() {
     const newShiftPayload = {
       day: dayForDB,
       newShift: {
-        user: loggedUser.name,
+        // use altUsernameValue for user, if not empty
+        user: altUsernameValue === "" ? loggedUser.name : altUsernameValue,
         startTime: shiftStartTime,
         endTime: shiftEndTime,
         isAllDay: true,
       },
     };
-    console.log(newShiftPayload);
     addShift(newShiftPayload);
+    setAltUsernameValue("");
     props.onModalClose();
   }
 
@@ -70,14 +73,15 @@ function DayModal(props) {
       const newShiftPayload = {
         day: dayForDB,
         newShift: {
-          user: loggedUser.name,
+          // use altUsernameValue for user, if not empty
+          user: altUsernameValue === "" ? loggedUser.name : altUsernameValue,
           startTime: shiftStartTime,
           endTime: shiftEndTime,
           isAllDay: false,
         },
       };
-      console.log(newShiftPayload);
       addShift(newShiftPayload);
+      setAltUsernameValue("");
       props.onModalClose();
     } else {
       // addMessage if anything in message textfield
@@ -116,20 +120,18 @@ function DayModal(props) {
         <ModalNotifier icon="people_alt" items={props.dayFormattedWorkers} />
         <hr />
         <div style={{ display: DisplayReserveDay }}>
-          <Tooltip arrow placement="top" title="Reserve full day">
-            <Button
-              onClick={handleReserveDay}
-              fullWidth
-              variant="contained"
-              disableElevation
-              style={{
-                background: "rgba(255, 255, 0, 0.2)",
-                border: "1px lightgrey solid",
-              }}
-            >
-              <span className={`icon`}>bookmark_border</span>Reserve all day
-            </Button>
-          </Tooltip>
+          <Button
+            onClick={handleReserveDay}
+            fullWidth
+            variant="contained"
+            disableElevation
+            style={{
+              background: "rgba(255, 255, 0, 0.2)",
+              border: "1px lightgrey solid",
+            }}
+          >
+            <span className={`icon`}>bookmark_border</span>Reserve all day
+          </Button>
         </div>
         <div className={`time-range-picker ${props.dayColor}`}>
           <ModalTimeRangePicker
@@ -141,24 +143,20 @@ function DayModal(props) {
           />
         </div>
         <div style={{ display: DisplayDelShift }}>
-          <Tooltip arrow placement="top" title="Delete shift">
-            <Button
-              onClick={handleDelShift}
-              fullWidth
-              variant="contained"
-              disableElevation
-            >
-              <span className={`icon`}>delete</span>Delete shift
-            </Button>
-          </Tooltip>
-        </div>
-        <div style={{ display: DisplayAddMessage }}>
-          <TextField
-            autoFocus={false}
-            id="name"
-            label="Add a Message"
-            type="name"
+          <Button
+            onClick={handleDelShift}
             fullWidth
+            variant="contained"
+            disableElevation
+          >
+            <span className={`icon`}>delete</span>Delete shift
+          </Button>
+        </div>
+        <div style={{ display: DisplayAdminUtils }}>
+          <TextField
+            id="name"
+            type="name"
+            label="Add a Message"
             value={messageValue}
             onChange={(event) => {
               setMessageValue(event.target.value);
@@ -168,7 +166,33 @@ function DayModal(props) {
       </DialogContent>
       <DialogActions>
         <div style={{ display: DisplaySave }}>
-          <Button onClick={saveModalInput} color="primary" size="small">
+          <TextField
+            label="As User..."
+            type="username"
+            id="username"
+            size="small"
+            margin="dense"
+            color="secondary"
+            variant="outlined"
+            value={altUsernameValue}
+            onChange={(event) => {
+              setAltUsernameValue(event.target.value);
+            }}
+            style={{
+              display: DisplayAdminUtils,
+              width: "8.5em",
+              marginBottom: "0.5em",
+            }}
+          />
+          <Button
+            onClick={saveModalInput}
+            color="primary"
+            variant="contained"
+            style={{
+              margin: "0.65em 1em 0.65em 0.5em",
+              background: "var(--main-color)",
+            }}
+          >
             save
           </Button>
         </div>
