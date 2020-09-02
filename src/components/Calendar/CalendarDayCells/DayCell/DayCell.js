@@ -37,6 +37,8 @@ function DayCell(props) {
     return (dt.getHours() < 10 ? "0" : "") + dt.getHours();
   }
 
+  const dayWorkers = dayShifts.map((shift) => shift.user);
+
   const dayFormattedWorkers = dayShifts.map((shift) =>
     `${shift.user} | ` + (shift.isAllDay === true
       ? `[שעות גמישות]`
@@ -50,7 +52,7 @@ function DayCell(props) {
           new Date(shift.endTime)
         )}`)
   ).sort((item) => {
-    return item.includes(`ש`)
+    return item.includes(`שעות`)
   });
 
   const dayFormattedMessages = dayMessages.map(
@@ -91,6 +93,7 @@ function DayCell(props) {
         isModalOpen={isModalOpen}
         onModalClose={() => setModalOpen(false)}
         dayFormattedMessages={dayFormattedMessages}
+        dayWorkers={dayWorkers}
         dayFormattedWorkers={dayFormattedWorkers}
         dayAlerts={dayAlerts}
         userShift={userShift}

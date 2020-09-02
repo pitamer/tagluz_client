@@ -11,6 +11,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import ModalTimeRangePicker from "./ModalTimeRangePicker";
 import ModalNotifier from "./ModalNotifier";
 
+import ShiftManager from "./WorkerManager";
+
 import "./index.css";
 
 function DayModal(props) {
@@ -39,6 +41,8 @@ function DayModal(props) {
   const [altUsernameValue, setAltUsernameValue] = React.useState("");
 
   const DisplayAdminUtils = loggedUser.isAdmin ? "" : "none";
+  const DisplayWorkerManager =
+    loggedUser.isAdmin && props.dayWorkers.length > 0 ? "" : "none";
   const DisplayDelShift = userHasShift ? "" : "none";
   const DisplayReserveDay = !userHasShift ? "" : "none";
   const DisplaySave =
@@ -47,9 +51,9 @@ function DayModal(props) {
       : "none";
 
   const dayForDB = props.day.setHours(8);
-  // This was the source of much frustration. It's a
-  // quirky solution, but it solves the timezone communication
-  // problems with the DB without too much extra work.
+  // This was the source of much frustration. It's a quirky
+  // solution, but it solves all the DB timezone communication
+  // problems without too much extra effort.
 
   function handleReserveDay() {
     const newShiftPayload = {
@@ -114,6 +118,11 @@ function DayModal(props) {
       className="day-modal"
     >
       <DialogTitle id="form-dialog-title">{modalTitle}</DialogTitle>
+      <ShiftManager
+        display={DisplayWorkerManager}
+        workers={props.dayWorkers}
+        dayForDB={dayForDB}
+      />
       <DialogContent>
         <ModalNotifier icon="report" items={props.dayAlerts} />
         <ModalNotifier icon="textsms" items={props.dayFormattedMessages} />
